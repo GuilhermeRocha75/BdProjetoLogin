@@ -7,7 +7,6 @@ package br.com.VIEWS;
 
 import br.com.DAO.ConexaoDAO;
 import java.sql.*;
-import javax.swing.*;
 import java.awt.*;
 
 //ou 
