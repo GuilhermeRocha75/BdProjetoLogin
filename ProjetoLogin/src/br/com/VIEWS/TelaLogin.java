@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.VIEWS;
 
 import br.com.DAO.ConexaoDAO;
@@ -14,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -26,7 +23,31 @@ public class TelaLogin extends javax.swing.JFrame {
    PreparedStatement pst = null;
    ResultSet rs = null;
    
-    
+    public void logar(){
+        String sql = "select * from tb_usuarios where login = ? and senha = ?";
+        
+        try {
+            //preparar a cosulta no banco, em função do que foi inserido nas caixas de texto
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtUsuario.getText());
+            pst.setString(2, txtSenha.getText());
+            
+            //executar a query
+            rs = pst.executeQuery();
+            
+            if (rs.next()){
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);// mudamos a visualização
+            }else {
+                JOptionPane.showMessageDialog(null, "Usuario e/ou senha inválidos");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Tela de login"+ e);
+            
+        }
+        
+    }
     
     public TelaLogin() {
         initComponents();
@@ -173,7 +194,9 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void btnEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntarActionPerformed
-        // TODO add your handling code here:
+      // Chamar metodo logar
+        logar();
+  
     }//GEN-LAST:event_btnEntarActionPerformed
 
     /**
